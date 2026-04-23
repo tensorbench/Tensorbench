@@ -9,7 +9,9 @@ authors = [{name = "TensorBench Contributors"}]
 dependencies = [
     "psutil>=5.9.0",
     "rich>=13.0.0",
-    "click>=8.1.0"
+    "click>=8.1.0",
+    "llama-cpp-python>=0.2.0",  # Движок для запуска моделей
+    "pynvml>=11.0.0"            # Мониторинг видеокарты NVIDIA
 ]
 
 [project.scripts]
