@@ -8,7 +8,6 @@ import urllib.request
 from rich.console import Console
 from rich.progress import Progress
 
-# Импортируем движок ИИ
 try:
     from llama_cpp import Llama
 except ImportError:
@@ -18,7 +17,6 @@ except ImportError:
 
 console = Console()
 
-# Конфигурация моделей (размер -> URL и имя файла)
 MODEL_URLS = {
     "0.5b": {
         "url": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF/resolve/main/qwen2.5-0.5b-instruct-q4_k_m.gguf",
@@ -41,7 +39,6 @@ MODEL_DIR = "models"
 
 
 def download_model(size: str = "0.5b"):
-    """Скачивает модель, если её нет в папке models"""
     if size not in MODEL_URLS:
         console.print(f"[red]❌ Неизвестный размер модели: {size}. Доступны: {list(MODEL_URLS.keys())}[/red]")
         sys.exit(1)
@@ -49,7 +46,6 @@ def download_model(size: str = "0.5b"):
     model_cfg = MODEL_URLS[size]
     model_path = os.path.join(MODEL_DIR, model_cfg["name"])
 
-    # Проверяем, есть ли файл уже
     if os.path.exists(model_path):
         file_size_mb = os.path.getsize(model_path) / (1024 * 1024)
         console.print(f"[green]✅[/green] Модель найдена: [bold]{model_cfg['name']}[/bold] ({file_size_mb:.1f} MB)")
@@ -59,17 +55,16 @@ def download_model(size: str = "0.5b"):
     os.makedirs(MODEL_DIR, exist_ok=True)
 
     try:
-        # Используем Rich Progress для красивого бара загрузки
         with Progress() as progress:
-            task = progress.add_task("[cyan]Загрузка...", total=None)
+            task = progress.add_task("[cyan]Загрузка...", total=0)
             
             def reporthook(block_num, block_size, total_size):
+                # Устанавливаем total при первом вызове, затем обновляем прогресс
+                if progress.tasks[0].total == 0 and total_size > 0:
+                    progress.update(task, total=total_size)
                 progress.update(task, advance=block_size)
 
             urllib.request.urlretrieve(model_cfg["url"], model_path, reporthook=reporthook)
-            
-            progress.update(task, completed=total_size, total=total_size)
-            progress.refresh()
 
         console.print("[green]✅[/green] Скачивание завершено!\n")
         return model_path
@@ -80,40 +75,33 @@ def download_model(size: str = "0.5b"):
 
 
 def run_benchmark(model_path: str):
-    """Запускает генерацию текста и замеряет производительность"""
     console.print(f"[bold]🚀 Запуск бенчмарка...[/bold]")
     console.print("[dim]Инициализация модели (может занять время)...[/dim]")
 
     try:
-        # Инициализация модели
-        # n_gpu_layers=-1 означает использование видеокарты по максимуму (если доступна)
         llm = Llama(
             model_path=model_path,
             n_gpu_layers=-1,  
-            n_ctx=2048,       # Контекстное окно
-            verbose=False     # Скрываем логи движка
+            n_ctx=2048,       
+            verbose=False     
         )
 
         prompt = "Explain the theory of relativity in 3 sentences."
         console.print(f"\n📝 Промпт: [italic]'{prompt}'[/italic]")
         console.print("\n🤖 [bold]Генерация ответа:[/bold]")
         
-        # Замер времени
         start_time = time.time()
         token_count = 0
         
-        # Генерация в потоковом режиме
         output = llm(prompt, max_tokens=100, stream=True)
         for chunk in output:
             token = chunk['choices'][0]['text']
-            # Печатаем токен без переноса строки и буферизации
             console.print(token, end="", style="cyan")
             token_count += 1
             
         end_time = time.time()
-        print("\n") # Отступ после генерации
+        print("\n")
         
-        # Расчет метрик
         duration = end_time - start_time
         tps = token_count / duration if duration > 0 else 0
         
@@ -130,7 +118,6 @@ def run_benchmark(model_path: str):
 
 
 def print_results(results: dict):
-    """Выводит итоговую таблицу с метриками"""
     if not results:
         return
     
@@ -141,7 +128,6 @@ def print_results(results: dict):
     console.print(f" Скорость (TPS)       : [bold green]{results['tps']} ток/сек[/bold green]")
     console.rule()
     
-    # Вывод оценки скорости
     tps = results['tps']
     if tps > 50:
         console.print(f"[bold green]🚀 Отличная скорость! ({tps} TPS)[/bold green]")
