@@ -7,8 +7,14 @@ src/tensorbench.egg-info/dependency_links.txt
 src/tensorbench.egg-info/entry_points.txt
 src/tensorbench.egg-info/requires.txt
 src/tensorbench.egg-info/top_level.txt
+src/tensorbench/analyzer/__init__.py
+src/tensorbench/analyzer/engine.py
+src/tensorbench/benchmark/__init__.py
+src/tensorbench/benchmark/runner.py
 src/tensorbench/core/__init__.py
 src/tensorbench/core/config.py
 src/tensorbench/core/models.py
+src/tensorbench/gui/__init__.py
+src/tensorbench/gui/main_window.py
 src/tensorbench/hardware/__init__.py
 src/tensorbench/hardware/detector.py

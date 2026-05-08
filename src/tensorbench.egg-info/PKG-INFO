@@ -8,4 +8,5 @@ Requires-Dist: pydantic>=2.0
 Requires-Dist: psutil>=5.9
 Requires-Dist: py-cpuinfo>=9.0
 Requires-Dist: pynvml>=11.5
+Requires-Dist: llama-cpp-python>=0.3.0
 Dynamic: license-file

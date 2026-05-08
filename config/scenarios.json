@@ -18,6 +18,15 @@
     "requires_fp16": true,
     "storage_min_gb": 10
   },
+  "llm_30b_q4": {
+    "vram_min_gb": 16,
+    "vram_recommended_gb": 24,
+    "ram_min_gb": 32,
+    "ram_recommended_gb": 64,
+    "cuda_cc_min": "7.5",
+    "requires_fp16": true,
+    "storage_min_gb": 20
+  },
   "image_sd15": {
     "vram_min_gb": 4,
     "vram_recommended_gb": 8,
@@ -35,5 +44,13 @@
     "requires_fp16": true,
     "storage_min_gb": 10,
     "notes": "1024x1024, требуется больше VRAM для рефаинера"
+  },
+  "image_flux": {
+    "vram_min_gb": 12,
+    "vram_recommended_gb": 16,
+    "ram_min_gb": 16,
+    "ram_recommended_gb": 32,
+    "requires_fp16": true,
+    "storage_min_gb": 15
   }
 }

@@ -7,7 +7,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field  
 from pathlib import Path
 from typing import Callable, Optional
 
@@ -45,17 +45,21 @@ class BenchmarkResult:
     # Measured metrics
     tokens_generated: int
     duration_seconds: float
-    tps: float  # Tokens per second
+    tps: float
     
     # Hardware context
     model_name: str
     model_size_mb: float
-    hardware_snapshot: dict  # Simplified: gpu_name, vram_gb, cpu_cores
+    hardware_snapshot: dict
     
     # Extrapolation data
-    baseline_factor: float = 1.0  # 1.0 = reference hardware
-    extrapolation_notes: list[str]
-
+    baseline_factor: float = 1.0
+    extrapolation_notes: list[str] = field(default_factory=list)  # ← ДОБАВЛЕНО ЗНАЧЕНИЕ ПО УМОЛЧАНИЮ
+    
+    # New fields for UI
+    engine: str = "llama.cpp"
+    quantization: str = "Q4_K_M"
+    gpu_utilization_pct: float = 100.0
 
 @dataclass
 class PredictionResult:
