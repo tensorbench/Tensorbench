@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tensorbench"
-version = "0.2.0-foundation"
+version = "0.2.0.dev1"
 description = "Hardware evaluator for local AI workloads"
 requires-python = ">=3.10"
 dependencies = [
@@ -12,6 +12,7 @@ dependencies = [
     "psutil>=5.9",
     "py-cpuinfo>=9.0",
     "pynvml>=11.5",
+    "llama-cpp-python>=0.3.0",
 ]
 
 [project.scripts]
