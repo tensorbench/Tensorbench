@@ -1,0 +1,39 @@
+{
+  "llm_7b_q4": {
+    "vram_min_gb": 4,
+    "vram_recommended_gb": 6,
+    "ram_min_gb": 8,
+    "ram_recommended_gb": 16,
+    "cuda_cc_min": "7.5",
+    "requires_fp16": false,
+    "storage_min_gb": 5,
+    "notes": "Оптимально с квантованием Q4_K_M"
+  },
+  "llm_13b_q4": {
+    "vram_min_gb": 8,
+    "vram_recommended_gb": 12,
+    "ram_min_gb": 16,
+    "ram_recommended_gb": 32,
+    "cuda_cc_min": "7.5",
+    "requires_fp16": true,
+    "storage_min_gb": 10
+  },
+  "image_sd15": {
+    "vram_min_gb": 4,
+    "vram_recommended_gb": 8,
+    "ram_min_gb": 8,
+    "ram_recommended_gb": 16,
+    "requires_fp16": true,
+    "storage_min_gb": 3,
+    "notes": "512x512 базовое разрешение"
+  },
+  "image_sdxl": {
+    "vram_min_gb": 8,
+    "vram_recommended_gb": 12,
+    "ram_min_gb": 16,
+    "ram_recommended_gb": 32,
+    "requires_fp16": true,
+    "storage_min_gb": 10,
+    "notes": "1024x1024, требуется больше VRAM для рефаинера"
+  }
+}
