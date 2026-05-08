@@ -1,0 +1,11 @@
+Metadata-Version: 2.4
+Name: tensorbench
+Version: 0.2.0.dev1
+Summary: Hardware evaluator for local AI workloads
+Requires-Python: >=3.10
+License-File: LICENSE
+Requires-Dist: pydantic>=2.0
+Requires-Dist: psutil>=5.9
+Requires-Dist: py-cpuinfo>=9.0
+Requires-Dist: pynvml>=11.5
+Dynamic: license-file

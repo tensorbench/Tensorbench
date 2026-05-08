@@ -1,0 +1,2 @@
+[console_scripts]
+tensorbench = tensorbench.cli.main:app
