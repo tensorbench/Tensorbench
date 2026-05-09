@@ -21,3 +21,11 @@ Thumbs.db
 # App data (конфиги пользователя не пушим)
 user_config/
 *.log
+# Папки сборки PyInstaller
+dist/
+build/
+*.spec
+
+# Кэш Python
+__pycache__/
+*.pyc
